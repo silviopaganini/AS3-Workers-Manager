@@ -17,7 +17,6 @@ package
 	
 	public class WorkerFactory
 	{
-		
 		/**
 		 * Creates a Worker from a Class.
 		 * @param clazz the Class to create a Worker from
@@ -33,13 +32,18 @@ package
 			var className:String = getQualifiedClassName(clazz).replace(/::/g, "."); 
 			var abcName:String = className.replace(/\./g, "/");
 			var classTag:ITag;
+			var abstract : ITag;
 			
 			for each (var tag:ITag in tags) 
 			{
 				if (tag is TagDoABC && TagDoABC(tag).abcName == abcName)
 				{
 					classTag = tag;
-					break;
+				}
+				
+				if (tag is TagDoABC && TagDoABC(tag).abcName == "cacilds/workers/AbstractWorker")
+				{
+					abstract = tag;
 				}
 			}
 			
@@ -50,9 +54,12 @@ package
 				swf.tags.push(new TagFileAttributes());
 				if (debug)
 					swf.tags.push(new TagEnableDebugger2());
+					
+				swf.tags.push(abstract);
 				swf.tags.push(classTag);
+				
 				var symbolTag:TagSymbolClass = new TagSymbolClass();
-				symbolTag.symbols.push(SWFSymbol.create(0, className));
+				symbolTag.symbols.push(SWFSymbol.create(1, className));
 				swf.tags.push(symbolTag);
 				swf.tags.push(new TagShowFrame());
 				swf.tags.push(new TagEnd());

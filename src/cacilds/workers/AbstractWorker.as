@@ -14,9 +14,7 @@ package cacilds.workers
 	{
 		protected var output : MessageChannel;
 		protected var input : MessageChannel;
-		
-		private var counter : Number = 0;
-		
+				
 		public function AbstractWorker()
 		{
 			super();
@@ -33,18 +31,6 @@ package cacilds.workers
 
 		protected function handleCommandMessage(command : String) : void
 		{
-			switch(command)
-			{
-				case "startEnterFrame":
-					addEventListener(Event.ENTER_FRAME, ef);
-					break;
-			}
-		}
-		
-		private function ef(event : Event) : void
-		{
-			counter++;
-			send(counter);
 		}
 		
 		protected function send(arg : *) : void

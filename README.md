@@ -43,21 +43,30 @@ private function workerHandler(event : Event) : void
 
 WorkerEnterFrame.as
 ```actionscript
-// listen for any commands
-override protected function handleCommandMessage(command : String) : void
+public class WorkerEnterFrame extends AbstractWorker
 {
-	switch(command)
-	{
-		case "startEnterFrame":
-			addEventListener(Event.ENTER_FRAME, ef);
-			break;
-	}
-}
+	private var counter : Number = 0;
 
-// execute your commands and send the info back to the main application
-private function ef(event : Event) : void
-{
-	counter++;
-	send(counter);
+	public function WorkerEnterFrame()
+	{
+		super();
+	}
+
+	override protected function handleCommandMessage(command : String) : void
+	{
+		switch(command)
+		{
+			case "startEnterFrame":
+				addEventListener(Event.ENTER_FRAME, ef);
+				break;
+		}
+	}
+
+	// execute your commands and send the info back to the main application
+	private function ef(event : Event) : void
+	{
+		counter++;
+		send(counter);
+	}
 }
 ```
